@@ -1,7 +1,7 @@
 {
   "name": "github-stars-feed-rss",
   "version": "1.0.0",
-  "description": "A package to get latest posts and send to GitHub Stars API.",
+  "description": "A package to export GitHub Stars contributions to CSV.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,9 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "csv-writer": "^1.6.0",
     "graphql": "^15.5.0",
-    "graphql-request": "^3.4.0",
-    "rss-parser": "^3.12.0"
+    "graphql-request": "^3.4.0"
   },
   "devDependencies": {
     "eslint": "^7.27.0",

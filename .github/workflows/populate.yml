@@ -1,26 +1,35 @@
 on:
   push:
   schedule:
-    - cron: '0 * * * *'
+    - cron: '0 0 1 1,4,7,10 *'  # Run quarterly on the 1st day of Jan, Apr, Jul, Oct at midnight UTC
+  workflow_dispatch:  # Allow manual triggering
 
 jobs:
-  populate:
+  export-contributions:
     runs-on: ubuntu-latest
-    name: Populate GitHub Stars API with blog and YouTube latest posts.
+    name: Export GitHub Stars contributions to CSV
     env:
       TOKEN: ${{ secrets.TOKEN }}
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup Node
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 18.x
+          cache: 'yarn'
 
       - name: Install dependencies
         run: yarn install
 
-      - name: Populate
+      - name: Export contributions to CSV
         run: node index.js
+
+      - name: Upload CSV artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: github-stars-contributions
+          path: contributions.csv
+          retention-days: 90
